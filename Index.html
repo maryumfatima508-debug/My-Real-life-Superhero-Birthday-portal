@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday My Real Life Superhero</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-yellow: #ffff00;
+            --neon-purple: #bf00ff;
+            --neon-orange: #ff6600;
+            --neon-green: #39ff14;
+            --dark-bg: #050508;
+        }
+
+        body {
+            background: var(--dark-bg);
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            position: relative;
+        }
+
+        /* Animated Background Grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating Orbs Background */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orbFloat 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--neon-pink);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 250px;
+            height: 250px;
+            background: var(--neon-cyan);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 200px;
+            height: 200px;
+            background: var(--neon-purple);
+            top: 50%;
+            left: 50%;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Neon Fireworks Canvas */
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Floating Neon Balloons */
+        .balloon-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .neon-balloon {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: balloonFloat 15s ease-in-out infinite;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 15px currentColor);
+        }
+
+        .neon-balloon::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 20px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            filter: blur(2px);
+        }
+
+        .neon-balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .balloon-pink {
+            background: radial-gradient(circle at 30% 30%, rgba(255, 0, 255, 0.8), rgba(255, 0, 255, 0.4));
+            color: var(--neon-pink);
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 20px var(--neon-pink), inset 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .balloon-cyan {
+            background: radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.8), rgba(0, 255, 255, 0.4));
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .balloon-yellow {
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 0, 0.8), rgba(255, 255, 0, 0.4));
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            box-shadow: 0 0 20px var(--neon-yellow), inset 0 0 20px rgba(255, 255, 0, 0.3);
+        }
+
+        .balloon-purple {
+            background: radial-gradient(circle at 30% 30%, rgba(191, 0, 255, 0.8), rgba(191, 0, 255, 0.4));
+            color: var(--neon-purple);
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 20px var(--neon-purple), inset 0 0 20px rgba(191, 0, 255, 0.3);
+        }
+
+        @keyframes balloonFloat {
+            0% {
+                transform: translateY(100vh) rotate(-5deg) translateX(0);
+            }
+            25% {
+                transform: translateY(75vh) rotate(5deg) translateX(20px);
+            }
+            50% {
+                transform: translateY(50vh) rotate(-3deg) translateX(-10px);
+            }
+            75% {
+                transform: translateY(25vh) rotate(3deg) translateX(15px);
+            }
+            100% {
+                transform: translateY(-20vh) rotate(0deg) translateX(0);
+            }
+        }
+
+        /* Floating Neon Cakes */
+        .cake-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .neon-cake {
+            position: absolute;
+            font-size: 40px;
+            animation: cakeFloat 12s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px currentColor) drop-shadow(0 0 30px currentColor);
+            opacity: 0.9;
+        }
+
+        .cake-1 { color: var(--neon-pink); animation-delay: 0s; left: 10%; }
+        .cake-2 { color: var(--neon-cyan); animation-delay: -3s; left: 30%; }
+        .cake-3 { color: var(--neon-yellow); animation-delay: -6s; left: 70%; }
+        .cake-4 { color: var(--neon-purple); animation-delay: -9s; left: 85%; }
+        .cake-5 { color: var(--neon-orange); animation-delay: -4s; left: 50%; }
+
+        @keyframes cakeFloat {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.2);
+            }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        /* Photo Frame with Neon Border */
+        .photo-wrapper {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            animation: photoFloat 6s ease-in-out infinite;
+        }
+
+        @media (min-width: 768px) {
+            .photo-wrapper {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        @keyframes photoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 
+                0 0 60px rgba(255, 0, 255, 0.4),
+                0 0 100px rgba(255, 0, 255, 0.2),
+                inset 0 0 60px rgba(255, 0, 255, 0.1);
+            border: 3px solid transparent;
+            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box,
+                        linear-gradient(45deg, var(--neon-pink), var(--neon-cyan), var(--neon-yellow), var(--neon-pink)) border-box;
+            background-size: 400% 400%;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Corner Accents */
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--neon-cyan);
+            animation: cornerPulse 2s ease-in-out infinite;
+        }
+
+        .corner-tl { top: -10px; left: -10px; border-right: none; border-bottom: none; border-radius: 10px 0 0 0; }
+        .corner-tr { top: -10px; right: -10px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
+        .corner-bl { bottom: -10px; left: -10px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
+        .corner-br { bottom: -10px; right: -10px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
+
+        @keyframes cornerPulse {
+            0%, 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 5px var(--neon-cyan)); }
+            50% { opacity: 0.6; transform: scale(1.1); filter: drop-shadow(0 0 20px var(--neon-cyan)); }
+        }
+
+        /* Neon Text */
+        .birthday-text {
+            text-align: center;
+            position: relative;
+        }
+
+        .line1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan), var(--neon-yellow), var(--neon-pink));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShine 3s linear infinite;
+            text-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+            display: block;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.8));
+        }
+
+        @media (min-width: 768px) {
+            .line1 { font-size: 4rem; letter-spacing: 8px; }
+        }
+
+        @keyframes textShine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .line2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 10px var(--neon-cyan),
+                0 0 20px var(--neon-cyan),
+                0 0 40px var(--neon-cyan);
+            animation: textGlow 2s ease-in-out infinite alternate;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .line2 { font-size: 1.8rem; letter-spacing: 5px; }
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan); }
+            100% { text-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan), 0 0 60px var(--neon-cyan); }
+        }
+
+        /* Heart Particles Container */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: heartFloat 4s ease-in forwards;
+            opacity: 0;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0) rotate(0deg);
+            }
+            20% {
+                transform: translateY(-50px) scale(1) rotate(10deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-300px) scale(0.5) rotate(20deg);
+            }
+        }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff, 0 0 20px var(--neon-yellow);
+            animation: sparkleAnim 1s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes sparkleAnim {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1) rotate(180deg); opacity: 1; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        /* Neon Cake Icon */
+        .cake-icon {
+            font-size: 3rem;
+            margin-top: 20px;
+            animation: cakeBounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px var(--neon-yellow)) drop-shadow(0 0 40px var(--neon-orange));
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 20;
+        }
+
+        .cake-icon:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        @keyframes cakeBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.1); }
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 380px) {
+            .photo-wrapper {
+                width: 240px;
+                height: 240px;
+            }
+            .line1 {
+                font-size: 2rem;
+                letter-spacing: 3px;
+            }
+            .line2 {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Prevent text selection */
+        .container {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Neon Fireworks Canvas -->
+    <canvas id="fireworksCanvas"></canvas>
+
+    <!-- Floating Neon Balloons -->
+    <div class="balloon-container" id="balloonContainer"></div>
+
+    <!-- Floating Neon Cakes -->
+    <div class="cake-container" id="cakeContainer"></div>
+
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="container">
+        <div class="photo-wrapper">
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+            
+            <div class="photo-frame">
+                <img src="IMG_5325.jpeg" alt="Birthday Celebration" id="birthdayPhoto">
+            </div>
+        </div>
+
+        <div class="birthday-text">
+            <span class="line1">Happy Birthday</span>
+            <span class="line2">My Real Life Superhero</span>
+        </div>
+
+        <div class="cake-icon" onclick="createBurst(event)">🎂</div>
+    </div>
+
+    <script>
+        // Canvas Fireworks System
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        let fireworks = [];
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Firework {
+            constructor(x, y, targetX, targetY, color) {
+                this.x = x;
+                this.y = y;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.color = color;
+                this.speed = 3;
+                this.angle = Math.atan2(targetY - y, targetX - x);
+                this.velocity = {
+                    x: Math.cos(this.angle) * this.speed,
+                    y: Math.sin(this.angle) * this.speed
+                };
+                this.trail = [];
+                this.life = 100;
+            }
+
+            update() {
+                this.trail.push({x: this.x, y: this.y});
+                if (this.trail.length > 10) this.trail.shift();
+
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+
+                const distance = Math.hypot(this.targetX - this.x, this.targetY - this.y);
+                if (distance < 10 || this.life <= 0) {
+                    this.explode();
+                    return false;
+                }
+                this.life--;
+                return true;
+            }
+
+            explode() {
+                const particleCount = 30 + Math.random() * 20;
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle(this.x, this.y, this.color));
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.trail[0]?.x || this.x, this.trail[0]?.y || this.y);
+                for (let point of this.trail) {
+                    ctx.lineTo(point.x, point.y);
+                }
+                ctx.lineTo(this.x, this.y);
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 3;
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = this.color;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+
+                // Draw rocket
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 4 + 2;
+                this.velocity = {
+                    x: Math.cos(angle) * velocity,
+                    y: Math.sin(angle) * velocity
+                };
+                this.life = 100;
+                this.decay = Math.random() * 2 + 1;
+                this.gravity = 0.1;
+            }
+
+            update() {
+                this.velocity.y += this.gravity;
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.life -= this.decay;
+                return this.life > 0;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = this.color;
+                ctx.globalAlpha = this.life / 100;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function createRandomFirework() {
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#bf00ff', '#ff6600', '#39ff14'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const startX = Math.random() * canvas.width;
+            const targetX = Math.random() * canvas.width;
+            const targetY = Math.random() * (canvas.height * 0.5);
+            fireworks.push(new Firework(startX, canvas.height, targetX, targetY, color));
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(5, 5, 8, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            fireworks = fireworks.filter(fw => {
+                fw.draw();
+                return fw.update();
+            });
+
+            particles = particles.filter(p => {
+                p.draw();
+                return p.update();
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Launch fireworks periodically
+        setInterval(createRandomFirework, 2000);
+
+        // Create Floating Neon Balloons
+        function createBalloon() {
+            const container = document.getElementById('balloonContainer');
+            const balloon = document.createElement('div');
+            const colors = ['balloon-pink', 'balloon-cyan', 'balloon-yellow', 'balloon-purple'];
+            const colorClass = colors[Math.floor(Math.random() * colors.length)];
+            
+            balloon.className = `neon-balloon ${colorClass}`;
+            balloon.style.left = Math.random() * 90 + 5 + '%';
+            balloon.style.animationDuration = (Math.random() * 5 + 12) + 's';
+            balloon.style.animationDelay = Math.random() * 5 + 's';
+            
+            container.appendChild(balloon);
+            
+            setTimeout(() => balloon.remove(), 20000);
+        }
+
+        // Create Floating Neon Cakes
+        function createFloatingCake() {
+            const container = document.getElementById('cakeContainer');
+            const cake = document.createElement('div');
+            const cakes = ['🎂', '🍰', '🧁', '🎂', '🍰'];
+            const cakeType = cakes[Math.floor(Math.random() * cakes.length)];
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#bf00ff', '#ff6600'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            cake.className = 'neon-cake';
+            cake.innerHTML = cakeType;
+            cake.style.color = color;
+            cake.style.left = Math.random() * 90 + 5 + '%';
+            cake.style.animationDuration = (Math.random() * 4 + 10) + 's';
+            cake.style.animationDelay = Math.random() * 3 + 's';
+            cake.style.filter = `drop-shadow(0 0 15px ${color}) drop-shadow(0 0 30px ${color})`;
+            
+            container.appendChild(cake);
+            
+            setTimeout(() => cake.remove(), 15000);
+        }
+
+        // Create floating hearts
+        function createHeart() {
+            const container = document.getElementById('heartsContainer');
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = ['💖', '💝', '💗', '💓', '💕', '❤️', '💜', '💙'][Math.floor(Math.random() * 8)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.bottom = '0';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            container.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        // Create sparkles around photo
+        function createSparkle() {
+            const photo = document.querySelector('.photo-wrapper');
+            const rect = photo.getBoundingClientRect();
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 150;
+            const x = rect.left + rect.width / 2 + Math.cos(angle) * radius;
+            const y = rect.top + rect.height / 2 + Math.sin(angle) * radius;
+            
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+
+        // Burst effect on cake click
+        function createBurst(e) {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            // Create multiple fireworks at click position
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#bf00ff', '#ff6600'];
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const fw = new Firework(x, y + 100, x + (Math.random() - 0.5) * 200, y - 100 + (Math.random() - 0.5) * 100, color);
+                    fireworks.push(fw);
+                }, i * 100);
+            }
+
+            // Create sparkles
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = x + (Math.random() - 0.5) * 200 + 'px';
+                    sparkle.style.top = y + (Math.random() - 0.5) * 200 + 'px';
+                    sparkle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    sparkle.style.boxShadow = `0 0 10px currentColor, 0 0 20px currentColor`;
+                    document.body.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 1000);
+                }, i * 50);
+            }
+        }
+
+        // Initialize floating elements
+        function initFloatingElements() {
+            // Create initial balloons
+            for (let i = 0; i < 5; i++) {
+                setTimeout(createBalloon, i * 1000);
+            }
+            
+            // Create initial cakes
+            for (let i = 0; i < 3; i++) {
+                setTimeout(createFloatingCake, i * 1500);
+            }
+        }
+
+        // Auto-generate effects
+        setInterval(createHeart, 800);
+        setInterval(createSparkle, 500);
+        setInterval(createBalloon, 3000);
+        setInterval(createFloatingCake, 4000);
+
+        // Initialize on load
+        window.addEventListener('load', initFloatingElements);
+
+        // Touch events for mobile
+        document.addEventListener('touchstart', function(e) {
+            if (e.target.classList.contains('cake-icon')) {
+                createBurst(e.touches[0]);
+            }
+        });
+
+        // Prevent zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Handle visibility change to pause animations
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.querySelectorAll('.orb, .photo-wrapper, .line1, .line2, .neon-balloon, .neon-cake').forEach(el => {
+                    el.style.animationPlayState = 'paused';
+                });
+            } else {
+                document.querySelectorAll('.orb, .photo-wrapper, .line1, .line2, .neon-balloon, .neon-cake').forEach(el => {
+                    el.style.animationPlayState = 'running';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
